@@ -28,13 +28,22 @@
     - 일정 토양 습도값 미만이 되면 물펌프 자동으로 작동
     - 대기의 온도, 습도 측정
 
+<br/>
+
 ## 👩‍💻 기술 스택
-**Python**
-**Kotlin**
-**PHP**
-**MySQL**
-**HTML**
-**CSS**
+`**Python**`
+
+`**Kotlin**`
+
+`**PHP**`
+
+`**MySQL**`
+
+`**HTML**`
+
+`**CSS**`
+
+<br/>
 
 ## 🐸 ProgFriends
 
