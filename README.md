@@ -51,7 +51,7 @@
     <tr align="center">
         <td style="min-width: 150px;">
             <a href="">
-              <img src="" width="100">
+              <img src="https://github.com/user-attachments/assets/dca5529e-ee50-4f79-a4cf-ee3ee66c7f8e" width="100">
               <br />
               <b>김경민</b>
             </a> 
@@ -65,7 +65,7 @@
     <tr align="center">
         <td style="min-width: 150px;">
             <a href="https://github.com/dksrkn">
-              <img src="" width="100">
+              <img src="https://github.com/user-attachments/assets/fd9caf50-49ee-4d77-abcb-5bd2fa0a9da1" width="100">
               <br />
               <b>안가은</b>
             </a> 
@@ -79,7 +79,7 @@
     <tr align="center">
         <td style="min-width: 150px;">
             <a href="">
-              <img src="" width="100">
+              <img src="https://github.com/user-attachments/assets/9a13fb86-778c-4144-8031-a2d7760a2044" width="100">
               <br />
               <b>문나연</b>
             </a> 
@@ -93,7 +93,7 @@
     <tr align="center">
         <td style="min-width: 150px;">
             <a href="">
-              <img src="" width="100">
+              <img src="https://github.com/user-attachments/assets/ac99d0ad-4da8-4e29-8c5e-79f89ac5e896" width="100">
               <br />
               <b>정다윤</b>
             </a> 
@@ -107,7 +107,7 @@
     <tr align="center">
         <td style="min-width: 150px;">
             <a href="">
-              <img src="" width="100">
+              <img src="https://github.com/user-attachments/assets/6d364d9b-ba2d-4315-ac53-c369a2f4bb5f" width="100">
               <br />
               <b>한서현</b>
             </a> 
