@@ -1,10 +1,10 @@
 # 베란다집사
 
-"식물과 green 일상"
+식물과 green 일상
 
 <br/>
 
-## 문제현황
+## 🤔 문제현황
 
 #### 여행 후 식물이 죽어있는 경험
 #### 물을 너무 많이 줘서 죽은 경험
@@ -13,7 +13,7 @@
 
 <br/>
 
-## 베란다집사
+## 🌿 베란다집사
 
 ## ✅ 핵심 기술
 1. 식물 AR
@@ -28,9 +28,9 @@
   - 일정 토양 습도값 미만이 되면 물펌프 자동으로 작동
   - 대기의 온, 습도 측정
 
-## 기술 스택
+## 👩‍💻 기술 스택
 
-## ProgFriends
+## 🐸 ProgFriends
 
 <table>
     <tr align="center">
@@ -49,7 +49,7 @@
     </tr>
     <tr align="center">
         <td style="min-width: 150px;">
-            <a href="">
+            <a href="https://github.com/dksrkn">
               <img src="" width="100">
               <br />
               <b>안가은</b>
