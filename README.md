@@ -47,4 +47,61 @@
             데이터베이스 설계 및 구축, 라즈베리파이 제어, 서버 프로그래밍
         </td>
     </tr>
+    <tr align="center">
+        <td style="min-width: 150px;">
+            <a href="">
+              <img src="" width="100">
+              <br />
+              <b>안가은</b>
+            </a> 
+        </td>
+    </tr>
+    <tr align="center">
+        <td>
+            라즈베리파이 제어, 서버 프로그래밍, YOLO 모델 훈련
+        </td>
+    </tr>
+    <tr align="center">
+        <td style="min-width: 150px;">
+            <a href="">
+              <img src="" width="100">
+              <br />
+              <b>문나연</b>
+            </a> 
+        </td>
+    </tr>
+    <tr align="center">
+        <td>
+            앱 프로그래밍, 데이터베이스 설계 및 구축, CNN 모델 설계 및 훈련
+        </td>
+    </tr>
+    <tr align="center">
+        <td style="min-width: 150px;">
+            <a href="">
+              <img src="" width="100">
+              <br />
+              <b>정다윤</b>
+            </a> 
+        </td>
+    </tr>
+    <tr align="center">
+        <td>
+            앱 프로그래밍, CNN 모델 설계 및 훈련
+        </td>
+    </tr>
+    <tr align="center">
+        <td style="min-width: 150px;">
+            <a href="">
+              <img src="" width="100">
+              <br />
+              <b>한서현</b>
+            </a> 
+        </td>
+    </tr>
+    <tr align="center">
+        <td>
+            라즈베리파이 제어, 서버 프로그래밍, YOLO 모델 훈련
+        </td>
+    </tr>
+  
 </table>
