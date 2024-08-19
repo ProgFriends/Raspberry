@@ -106,7 +106,7 @@
     </tr>
     <tr align="center">
         <td style="min-width: 150px;">
-            <a href="">
+            <a href="https://github.com/0926Hanseo">
               <img src="https://github.com/user-attachments/assets/6d364d9b-ba2d-4315-ac53-c369a2f4bb5f" width="100">
               <br />
               <b>한서현</b>
