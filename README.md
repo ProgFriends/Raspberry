@@ -50,7 +50,7 @@
 <table>
     <tr align="center">
         <td style="min-width: 150px;">
-            <a href="">
+            <a href="https://github.com/kmin82">
               <img src="https://github.com/user-attachments/assets/dca5529e-ee50-4f79-a4cf-ee3ee66c7f8e" width="100">
               <br />
               <b>김경민</b>
@@ -78,7 +78,7 @@
     </tr>
     <tr align="center">
         <td style="min-width: 150px;">
-            <a href="">
+            <a href="https://github.com/NYMoon0408">
               <img src="https://github.com/user-attachments/assets/9a13fb86-778c-4144-8031-a2d7760a2044" width="100">
               <br />
               <b>문나연</b>
@@ -92,7 +92,7 @@
     </tr>
     <tr align="center">
         <td style="min-width: 150px;">
-            <a href="">
+            <a href="https://github.com/dilma01">
               <img src="https://github.com/user-attachments/assets/ac99d0ad-4da8-4e29-8c5e-79f89ac5e896" width="100">
               <br />
               <b>정다윤</b>
