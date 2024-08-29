@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내가 그린 병충해</title>
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/NanumBaReunHiPi.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: 'NanumBaReunHiPi';
+        }
+        #canvasContainer {
+            text-align: center;
+        }
+        #jsCanvas {
+            border: 1px solid #ccc;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .controls div {
+            margin: 0 5px;
+        }
+        .colors {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .color {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        #toolbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        #toolbar button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s;
+        }
+        #toolbar button:hover {
+            background-color: #ddd;
+        }
+        #title {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="title">😈 병충해를 그려봐요 😈</div>
+    <div id="canvasContainer">
+        <canvas id="jsCanvas" width="600" height="600"></canvas>
+    </div>
+    <div class="controls">
+        <input type="range" id="jsRange" min="1" max="20" value="5">
+    </div>
+    <div class="colors">
+        <div class="color" style="background-color: black;" data-color="black"></div>
+        <div class="color" style="background-color: red;" data-color="red"></div>
+        <div class="color" style="background-color: orange;" data-color="orange"></div>
+        <div class="color" style="background-color: yellow;" data-color="yellow"></div>
+        <div class="color" style="background-color: green;" data-color="green"></div>
+        <div class="color" style="background-color: blue;" data-color="blue"></div>
+        <div class="color" style="background-color: purple;" data-color="purple"></div>
+        <div class="color" style="background-color: pink;" data-color="pink"></div>
+        
+    </div>
+    <div id="toolbar">
+        <button id="jsDraw"><img src = "static\img\pen.png" width="30"></button>
+        <button id="jsErase"><img src = "static\img\eraser.png" width="30"></button>
+        <button id="jsSave"><img src = "static\img\save.png" width="30"></button>
+        <button id="jsSaveTransparent"><img src = "static\img\down.png" width="30"> </button>
+        <button id="jsUpload"><img src = "static\img\upload.png" width="30"></button>
+    </div>
+
+    <script>
+        document.getElementById('jsUpload').addEventListener('click', function() {
+            window.location.href = '/'; // Index 페이지로 이동
+        });
+    </script>
+
+    <script>
+        const canvas = document.getElementById("jsCanvas");
+        const ctx = canvas.getContext("2d");
+        const range = document.getElementById("jsRange");
+        const colors = document.getElementsByClassName("color");
+        const drawButton = document.getElementById("jsDraw");
+        const eraseButton = document.getElementById("jsErase");
+        const saveButton = document.getElementById("jsSave");
+        const saveTransparentButton = document.getElementById("jsSaveTransparent");
+        const uploadButton = document.getElementById("jsUpload");
+
+        let painting = false;
+        let erasing = false;
+
+        canvas.width = 400;
+        canvas.height = 400;
+
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = "black";
+        ctx.fillStyle = "black";
+        ctx.lineWidth = 5;
+
+        function getCanvasImage() {
+            return canvas.toDataURL("image/png");
+        }
+
+        function uploadImage() {
+            const imageData = getCanvasImage();
+            fetch('/upload_image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image: imageData })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = `/previous_page?image_id=${data.image_id}`;
+                    alert('Image uploaded successfully!');
+                } else {
+                    alert('Image upload failed!');
+                }
+            });
+        }
+
+        function startPosition() {
+            painting = true;
+        }
+
+        function endPosition() {
+            painting = false;
+            ctx.beginPath();
+        }
+
+        function draw(event) {
+            if (!painting) return;
+            ctx.lineTo(event.offsetX, event.offsetY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(event.offsetX, event.offsetY);
+        }
+
+        function handleRangeChange(event) {
+            const size = event.target.value;
+            ctx.lineWidth = size;
+        }
+
+        function handleColorClick(event) {
+            const color = event.target.dataset.color;
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            erasing = false;  // Disable eraser mode when a color is selected
+        }
+
+        function handleCanvasClick() {
+            if (filling) {
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+        
+        function handleDrawClick() {
+			ctx.strokeStyle = ctx.fillStyle;
+		}
+	
+
+        function handleEraseClick() {
+                ctx.strokeStyle = "white";  // Set stroke style to white for erasing
+        }
+
+        function handleSaveClick() {
+            const image = canvas.toDataURL("image/png");
+            const link = document.createElement("a");
+            link.href = image;
+            link.download = "paintJS.png";
+            link.click();
+        }
+
+        function handleSaveTransparentClick() {
+            const tempCanvas = document.createElement("canvas");
+            const tempCtx = tempCanvas.getContext("2d");
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+
+            tempCtx.drawImage(canvas, 0, 0);
+
+            const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+            const data = imageData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i] === 255 && data[i + 1] === 255 && data[i + 2] === 255) {
+                    data[i + 3] = 0;  // Set alpha to 0 for white background
+                }
+            }
+
+            tempCtx.putImageData(imageData, 0, 0);
+            const image = tempCanvas.toDataURL("image/png");
+            const link = document.createElement("a");
+            link.href = image;
+            link.download = "paintJS_transparent.png";
+            link.click();
+        }
+
+        function getTransparentCanvasImage() {
+            const tempCanvas = document.createElement("canvas");
+            const tempCtx = tempCanvas.getContext("2d");
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+
+            // 원래 캔버스 내용을 복사합니다.
+            tempCtx.drawImage(canvas, 0, 0);
+
+            // 이미지 데이터를 가져옵니다.
+            const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+            const data = imageData.data;
+
+            // 흰색을 투명색으로 바꿉니다.
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i] === 255 && data[i + 1] === 255 && data[i + 2] === 255) {
+                    data[i + 3] = 0; // 알파 값을 0으로 설정하여 투명하게 만듭니다.
+                }
+            }
+
+            // 수정된 이미지를 다시 캔버스에 적용합니다.
+            tempCtx.putImageData(imageData, 0, 0);
+
+            return tempCanvas.toDataURL("image/png");
+        }
+
+        function uploadImage() {
+            const imageData = getTransparentCanvasImage(); // 투명 배경으로 변경된 이미지를 가져옵니다.
+            fetch('/upload_image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image: imageData })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = `/previous_page?image_id=${data.image_id}`;
+                    alert('Image uploaded successfully!');
+                } else {
+                    alert('Image upload failed!');
+                }
+            });
+        }
+
+        uploadButton.addEventListener('click', uploadImage);
+
+
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', endPosition);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('click', handleCanvasClick);
+        
+		// 추가된 터치 이벤트 핸들러들
+		canvas.addEventListener('touchstart', startTouchPosition);
+		canvas.addEventListener('touchend', endPosition); // 마우스와 동일
+		canvas.addEventListener('touchmove', drawTouch);
+
+		// 터치가 시작될 때 실행
+		function startTouchPosition(event) {
+			event.preventDefault(); // 터치 이벤트가 스크롤을 발생시키지 않도록 방지
+			const touch = event.touches[0];
+			startPosition({ offsetX: touch.clientX - canvas.offsetLeft, offsetY: touch.clientY - canvas.offsetTop });
+		}
+
+		// 터치가 움직일 때 실행
+		function drawTouch(event) {
+			event.preventDefault(); // 터치 이벤트가 스크롤을 발생시키지 않도록 방지
+			const touch = event.touches[0];
+			draw({ offsetX: touch.clientX - canvas.offsetLeft, offsetY: touch.clientY - canvas.offsetTop });
+		}
+
+        range.addEventListener("input", handleRangeChange);
+
+        Array.from(colors).forEach(color =>
+            color.addEventListener("click", handleColorClick)
+        );
+
+        drawButton.addEventListener("click", handleDrawClick);
+        eraseButton.addEventListener("click", handleEraseClick);
+        saveButton.addEventListener("click", handleSaveClick);
+        saveTransparentButton.addEventListener("click", handleSaveTransparentClick);
+        uploadButton.addEventListener('click', uploadImage);
+    </script>
+    
+</body>
+</html>

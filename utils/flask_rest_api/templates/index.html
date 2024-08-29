@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plant AR</title>
+    <style>
+		@media screen and (orientation : landscape){
+			body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            }
+            #video-container {
+            position: relative;
+            width: 100%;
+            max-width: 1280px; /* 최대 너비 */
+            height: auto; /* 비율 유지 */
+            z-index: 0;
+            }         
+        }
+
+        #humidity {
+        position: absolute;
+        bottom: 10px; /* Adjust as needed */
+        left: 640px;
+        transform: translateX(-50%); /* 수평 가운데 정렬 */
+        background-color: rgba(217, 198, 183, 0.8); /* 배경색 및 투명도 설정 */
+        padding: 10px;
+        border-radius: 5px;
+        display: flex;
+        z-index: 5; /* 다른 요소 위에 표시 */
+        }
+        
+        .fixed-image {
+        position: absolute;
+        top: 500px; /* 비디오 화면 아래에서 10px 만큼 위에 위치 */
+        left: 300px; /* 비디오 화면 가로 중앙에 위치 */
+        width: 150px;
+        height: 150px
+        z-index = 10;
+        
+        }
+
+        #air, #temp {
+            display: flex; /* Flexbox 사용 */
+            align-items: center; /* 수직 가운데 정렬 */
+            text-align: center;
+            margin: 0 10px; /* 요소 사이에 여백 추가 */
+            white-space :nowrap ;   
+                
+        }
+        
+        #soil1 {
+            background-color: rgba(163, 200, 209, 0.5);
+            position: absolute;
+            border-radius: 10px;
+            z-index: 7;
+            padding: 10px;
+            width : 250px;
+            white-space :nowrap ;
+        }
+        
+        #soil2 {
+            background-color: rgba(163, 200, 209, 0.5);
+            position: absolute;
+            border-radius: 10px;
+            z-index: 7;
+            padding: 10px;
+            width : 250px;
+            white-space :nowrap ;
+        }
+
+        #name1 {
+            position : absolute;
+            background-color: rgba(209, 163, 208, 0.9);
+            border-radius: 10px;
+            z-index : 8;
+            width : 250px;
+            text-align: center;
+        }
+
+        #name2 {
+            position : absolute;
+            background-color: rgba(163, 182, 209, 0.9);
+            border-radius: 10px;
+            z-index : 8;
+            width : 250px;
+            text-align: center;
+        }
+        
+         #wbtn1{
+            position: absolute;
+            bottom: 10px; /* 비디오 화면 아래에서 10px 만큼 위에 위치 */
+            left : 10px;
+            background-color: rgba(209, 163, 208, 0.8);
+            border-radius: 20px;
+            z-index : 8;
+            width : 250px;
+        }
+        
+        #wbtn2{
+            position: absolute;
+            bottom: 10px; /* 비디오 화면 아래에서 10px 만큼 위에 위치 */
+            left : 1020px;
+            background-color: rgba(163, 182, 209, 0.8);
+            border-radius: 20px;
+            z-index : 8;
+            width : 250px;
+        }
+        
+        #soil1, #soil2, #name1, #name2 {
+			display : none;
+		}
+		#drawbtn {
+			background : transparent;
+			border-color : transparent;
+			position: absolute;
+			left:1170px;
+			top: 2%;
+        }
+    </style>
+<body>
+	
+<div id="soil1">
+    <img src="static/img/soilhum.png" width="50" style="display: inline-block;">
+    <h2 id="soilname1" style="display: inline-block;">토양습도</h2>
+    <h2 id="hum"style="display: inline-block;">{{hum}}</h2>
+</div>
+<div id="soil2">
+    <img src="static/img/soilhum.png" width="50" style="display: inline-block;">
+    <h2 id="soilname2" style="display: inline-block;">토양습도</h2>
+    <h2 id="hum2" style="display: inline-block;">{{hum2}}</h2>
+</div>
+<div id = "name1" style = "display :inline-none;">
+    <h2 id = "pname1"></h2>
+</div>
+
+<div id = "name2">
+    <h2 id = "pname2"></h2>
+</div>
+
+<div id="video-container">
+    <img id="video-feed" src="{{ url_for('video_feed') }}" width="1280" height="720" style="border: 2px solid #000;">
+    <div id="humidity">
+        <div id="air">
+            <img src="static\img\airhum.png" width="80" class="airimage">
+            <h2 id="airname">공기습도</h2>
+            <h1 id="air_hum">{{air_hum}}</h1>
+        </div>
+    
+        <div id="temp">
+            <img src="static\img\temp.png" width="33">
+            <h2 id="tempname">온도</h2>
+            <h1 id="air_tem">{{air_tem}}</h1>
+        </div>
+    </div>
+   <!--
+    <div class="container">
+		<img src="static/img/cutesegyun.png" alt=fixfix class="fixed-image">
+	</div>
+	-->
+	
+    <button class="button" id="wbtn1" type="button">
+        <img src="static\img\wateraperture.png" width="100" >
+    </button>
+    
+    <button class="button" id="wbtn2" type="button">
+        <img src="static\img\wateraperture.png" width="100" >
+    </button>
+    <button class="draw" id="drawbtn" type="button">
+		<img src="static\img\draw.png" width="100">
+	</button>
+</div>
+
+<script>
+document.getElementById('drawbtn').addEventListener('click',function() {
+	window.location.href = '/canvas';
+	});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://' + document.domain + ':' + location.port);  // WebSocket 연결
+/*
+    // WebSocket 메시지 수신
+    socket.on('object_coordinates', function(data) {
+        var coordinates = data.coordinates;
+        if (coordinates.length > 0) {
+            var className = coordinates[0].class_name; 
+            updateClassName(className);
+        }
+    });
+*/
+ function setElementPosition(elementId, x, y) {
+        const element = document.getElementById(elementId);
+        const videoElement = document.getElementById('video-feed');
+        const videoWidth = videoElement.offsetWidth; // 비디오 영상의 너비
+        const videoHeight = videoElement.offsetHeight; // 비디오 영상의 높이
+
+        // 비율로 전환된 좌표를 실제 좌표로 변환
+        const adjustedX = x * videoWidth - 50;
+        const adjustedY = y * videoHeight - 10;
+        // 요소의 크기를 고려하여 위치를 설정합니다.
+        const elementWidth = element.offsetWidth;
+        const elementHeight = element.offsetHeight;
+
+        element.style.left = `${adjustedX - elementWidth / 2}px`; // 가운데 정렬을 위해 너비의 절반을 뺍니다.
+        element.style.top = `${adjustedY - elementHeight / 2}px`; // 가운데 정렬을 위해 높이의 절반을 뺍니다.
+
+        /*element.style.left = `${adjustedX}px`;*/
+       /* element.style.top = `${adjustedY}px`;*/
+    }
+
+
+    //soil정보 표시하는 이벤트 수신
+    socket.on('soil1', (data) => {
+        const soilbox1 = document.getElementById('soil1');
+        if (data.display) {
+
+            soilbox1.style.display = 'block'; // 보이기
+   
+            // 좌표값을 화면 크기에 맞게 조정
+            const videoWidth = 1280; // 웹캠 화면의 너비
+            const videoHeight = 720; // 예시로 설정된 웹캠 화면의 높이
+
+            soilbox1.style.left = `${data.x}px`;
+            soilbox1.style.top = `${data.y}px`;
+                       
+        } else {
+            soilbox1.style.display = 'none'; // 숨기기
+        }
+    });
+    //name1 정보
+    socket.on('name1', (data) => {
+        const namebox1 = document.getElementById('name1');
+        if (data.display) {
+
+            namebox1.style.display = 'block'; // 보이기
+   
+            // 좌표값을 화면 크기에 맞게 조정
+            const videoWidth = 1280; // 웹캠 화면의 너비
+            const videoHeight = 720; // 예시로 설정된 웹캠 화면의 높이
+
+            namebox1.style.left = `${data.x}px`;
+            namebox1.style.top = `${data.y}px`;
+                       
+        } else {
+            namebox1.style.display = 'none'; // 숨기기
+        }
+    });
+
+    socket.on('name2', (data) => {
+        const namebox2 = document.getElementById('name2');
+        if (data.display) {
+
+            namebox2.style.display = 'block'; // 보이기
+   
+            // 좌표값을 화면 크기에 맞게 조정
+            const videoWidth = 1280; // 웹캠 화면의 너비
+            const videoHeight = 720; // 예시로 설정된 웹캠 화면의 높이
+
+            namebox2.style.left = `${data.x}px`;
+            namebox2.style.top = `${data.y}px`;
+                       
+        } else {
+            namebox2.style.display = 'none'; // 숨기기
+        }
+    });
+
+    socket.on('soil2', (data) => {
+        const soilbox2 = document.getElementById('soil2');
+        if (data.display) {
+
+            soilbox2.style.display = 'block'; // 보이기
+   
+            // 좌표값을 화면 크기에 맞게 조정
+            const videoWidth = 1280; // 웹캠 화면의 너비
+            const videoHeight = 720; // 예시로 설정된 웹캠 화면의 높이
+
+            soilbox2.style.left = `${data.x}px`;
+            soilbox2.style.top = `${data.y}px`;
+                       
+        } else {
+            soilbox2.style.display = 'none'; // 숨기기
+        }
+    });
+    
+    socket.on('pname1', (data) => {
+        const pname1Div = document.getElementById('pname1');
+        if (data.display) {
+            pname1Div.innerHTML = `${data.plant_name}`;
+        } else {
+            pname1Div.innerHTML = '';
+        }
+    });
+
+    socket.on('pname2', (data) => {
+        const pname2Div = document.getElementById('pname2');
+        if (data.display) {
+            pname2Div.innerHTML = `${data.plant_name}`;
+        } else {
+            pname2Div.innerHTML = '';
+        }
+    });
+
+	socket.on('humidity_update', function(data) {
+		document.getElementById('air_hum').innerText = data.air_hum;
+		document.getElementById('hum').innerText = data.hum;
+		document.getElementById('air_tem').innerText = data.air_tem;
+		document.getElementById('hum2').innerText = data.hum2;
+	});
+	
+	socket.on('update_current_class', function(data) {
+        var currentClassName = data.class_name;  // 서버에서 보낸 현재 클래스 이름 받기
+        updateClassName(currentClassName);  // 클래스 이름 업데이트 함수 호출
+    });
+    
+    // 클래스 이름 업데이트
+    function updateClassName(className) {
+        var classNameElement1 = document.getElementById('pname1');
+        var classNameElement2 = document.getElementById('pname2');
+        classNameElement1.textContent = className;
+        classNameElement2.textContent = className;
+    }
+
+    // 주기적으로 클래스 이름 요청
+    setInterval(function() {
+        socket.emit('request_class_name');
+    }, 20000); // 20초마다 한 번
+    
+    
+    document.getElementById('wbtn1').addEventListener('click', function() {
+		fetch('/activate_motor2', {method: 'POST'})
+			.then(response => {
+				if(response.ok) {
+					console.log('success');
+				} else {
+					console.log('fail');
+				}
+			})
+			.catch(error => {
+				console.log('Error:',error);
+			});
+	});
+	
+	document.getElementById('wbtn2').addEventListener('click', function() {
+		fetch('/activate_motor', {method: 'POST'})
+			.then(response => {
+				if(response.ok) {
+					console.log('success');
+				} else {
+					console.log('fail');
+				}
+			})
+			.catch(error => {
+				console.log('Error:',error);
+			});
+	});	
+</script>
+</body>
+</html>

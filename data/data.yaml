@@ -1,0 +1,18 @@
+train: C:\Users\hanseo\Contents\imagezipFinal
+val: C:\Users\hanseo\Contents\imagezipFinal
+
+nc: 12
+names: [
+  'scindapsus',
+  'hoya',
+  'leaf',
+  'pot',
+  'frydek',
+  'corn',
+  'monstera',
+  'oak',
+  'staghorn',
+  'ivy',
+  'plant',
+  'sick_leaf'
+]
