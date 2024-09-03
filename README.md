@@ -44,7 +44,8 @@
 
 ## 시스템 구성도
 ~~시스템 구성도 및 라즈베리파이 회로도 넣을지 말지 고민 중~~ 
-<img src="https://github.com/user-attachments/assets/18e7989e-8381-42c3-a51d-83150876c7e3" width="300">
+<br/>
+<img src="https://github.com/user-attachments/assets/18e7989e-8381-42c3-a51d-83150876c7e3" width="500">
 <br/>
 
 ## 👩‍💻 기술 스택
