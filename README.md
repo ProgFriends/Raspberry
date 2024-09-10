@@ -39,8 +39,8 @@
 
 <br/>
 
-## 📱 구성
-<img src="https://github.com/user-attachments/assets/3834c110-d713-431f-a66b-16c3e4c1101c" width="400"><br/>
+## 📱 애플리케이션 일부 UI
+<img src="https://github.com/user-attachments/assets/3834c110-d713-431f-a66b-16c3e4c1101c" width="500"><br/>
 <br/>
 
 ## 🔷 시스템 구성도 & 라즈베리파이 회로도
