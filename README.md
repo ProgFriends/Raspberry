@@ -2,8 +2,9 @@
 
 스마트한 식물 관리 <br/>
 ~~최종 영상 유튜브에 올려서 링크 달기 or 배포해서 깃허브 보는 사람이 실행해볼 수 있도록~~
-<img src="https://github.com/user-attachments/assets/5ac8af53-fa0e-4ce2-9d36-f7135fcdc3ad" width="400">
 <img src="https://github.com/user-attachments/assets/046ab799-dd1a-4fa0-bc09-e4e601d5e763" width="400">
+<img src="https://github.com/user-attachments/assets/5ac8af53-fa0e-4ce2-9d36-f7135fcdc3ad" width="300">
+
 <br/>
 
 ## 🤔 문제현황
